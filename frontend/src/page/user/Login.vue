@@ -4,17 +4,17 @@
             <div class="middle">
                 <h1>SS_log</h1>
                 <div class="input-wrap">
-                    <input v-model="email"
+                    <input v-model="loginData.email"
                         id="email" 
                         placeholder="이메일을 입력해주세요"
                         type="text"/>
                 </div>
                 <div class="input-wrap">
-                    <input v-model="password" type="password"
+                    <input v-model="loginData.password" type="password"
                         id="password"
                         placeholder="영문, 숫자 혼용 8자 이상"/>
                 </div>
-                <button class="btn btn--back btn--login">
+                <button @click="login" class="btn btn--back btn--login">
                     로그인 하기
                 </button>
                 <div class="add-option">
@@ -44,16 +44,21 @@
         },
         watch: {
         },
-        methods: {
-        },
         data: () => {
             return {
                 constants,
+                loginData: {
                 email: '',
                 password: '',
-
+                }
             }
-        }
+        },
+        methods: {
+            login() {
+                this.$emit('submit-login-data', this.loginData)
+            }
+        },
+        
 
     }
 
