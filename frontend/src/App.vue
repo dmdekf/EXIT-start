@@ -16,7 +16,7 @@ const SERVER_URL = "http://127.0.0.1:8080";
 export default {
   name: "App",
   components: {
-    Header,
+    Header
   },
   created() {
     let url = this.$route.name;
@@ -26,14 +26,18 @@ export default {
   watch: {
     $route(to) {
       this.checkUrl(to.name);
-    },
+    }
   },
   methods: {
+    setCookie(token) {
+      this.$cookies.set("auth-token", token);
+      this.isLoggedIn = true;
+    },
     checkUrl(url) {
       let array = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN];
 
       let isHeader = true;
-      array.map((path) => {
+      array.map(path => {
         if (url === path) isHeader = false;
       });
       this.isHeader = isHeader;
@@ -41,19 +45,35 @@ export default {
     login(loginData) {
       axios
         .post(SERVER_URL + "/account/login", loginData)
-        .then((res) => {
+        .then(res => {
           console.log(res);
-          this.$router.push({ name: "List" });
+          this.$router.push({ name: "constants.URL_TYPE.POST.MAIN" });
         })
-        .catch((err) => console.log(err.response.data));
+        .catch(err => console.log(err.response.data));
     },
+    logout() {
+      const config = {
+        heders: {
+          Authorization: `Token ${this.$cookies.get("auth-token")}`
+        }
+      };
+      axios
+        .post(SERVER_URL + "/rest-auth/logout/", null, config)
+        .then(() => {
+          this.isLoggedIn = false;
+          this.$router.push({ name: "constants.URL_TYPE.POST.MAIN" });
+        })
+        .catch(err => console.log(err.response.data));
+    }
   },
   data: function() {
     return {
       isHeader: true,
       constants,
+      isLoggedIn: false,
+      errorMessages: null
     };
-  },
+  }
 };
 </script>
 
