@@ -11,6 +11,11 @@ export default {
         USER: {
             LOGIN: 'login',
             JOIN: 'join', 
+            SIGNUP: 'signup',
+            AUTH: 'authentication',
+            DETAIL: 'detail',
+            UPDATE: 'update',
+            DELETE: 'delete',
         },
         POST: {
             MAIN : "main",
