@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String uid;
 
     @JsonIgnore
@@ -34,4 +33,6 @@ public class User {
     @Column(insertable = false, updatable = false)
     private LocalDateTime createDate;
 
+    @Column
+    private String userkey;
 }
